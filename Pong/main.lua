@@ -15,9 +15,13 @@ VIRTUAL_HEIGHT = 243
 function love.load()
     -- Use nearest neighbor filter
     love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    smallFont = love.graphics.newFont('font.ttf', 8)
+    love.graphics.setFont(smallFont)
+
     -- Initialize game using a virtual resolution
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
-        fullscreen = false,
+        fullscreen = true,
         resizable = false,
         vsync = true
     })
@@ -34,8 +38,24 @@ function love.draw()
     -- Start rendering in virtual resolution
     push:apply('start')
 
-    love.graphics.printf('Hello pong', 0, VIRTUAL_HEIGHT / 2 - 6, VIRTUAL_WIDTH, 'center')
-    
+    -- Clear the screen with the color rgb(40, 45, 52)
+    love.graphics.clear(40/255, 45/255, 52/255, 1)
+
+    -- DRAW UI
+
+    love.graphics.printf('Hello pong', 0, 20, VIRTUAL_WIDTH, 'center')
+
+    -- DRAW GAME OBJECTS
+
+    -- Draw first paddle (left)
+    love.graphics.rectangle('fill', 10, 30, 5, 20)
+
+    -- Draw second paddle (right)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+
+    -- Draw ball
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 5, 5)
+
     -- End rendering in virtual resolution
     push:apply('end')
 end
